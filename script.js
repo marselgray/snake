@@ -12,7 +12,7 @@ var r, g, b;
 //sets up canvas which is actual a grid and drawing ability 
 function setup(){
     // width, height 
-    createCanvas(700, 500)
+    createCanvas(900, 500)
     s = new Snake();
     frameRate(10);
     pickLocation(); 
