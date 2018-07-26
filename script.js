@@ -3,17 +3,37 @@ var s;
 //variable to keep track of grid size
 var scl = 20;
 
+//object the snake attempts to eat
+var food;
+
 //sets up canvas which is actual a grid and drawing ability 
 function setup(){
     createCanvas(600, 600)
     s = new Snake();
     frameRate(10);
+    pickLocation();
 }
 
+// puts the snake's food in a random location after it is eaten
+function pickLocation(){
+    var cols = floor(width/scl);
+    var rows = floor(height/scl);
+    food = createVector(floor(random(cols)), floor(random(rows)));
+    food.mult(scl)
+}
+
+// carries out the rendering elements to make everything visible
 function draw(){
     background(51);
     s.update();
     s.show();
+    if (s.eat(food)){
+        pickLocation();
+    }
+
+    //var food features
+    fill(255, 0, 100);
+    rect(food.x, food.y, scl, scl)
 }
 
 // key press functions from P5 Library 
@@ -31,7 +51,7 @@ function keyPressed(){
     }
 }
 
-//actual snake (well not actual)
+//actual snake object (well not actual snake)
 function Snake(){
     this.x = 0;
     this.y = 0;
@@ -42,6 +62,15 @@ function Snake(){
     this.dir = function(x, y){
         this.xspeed = x;
         this.yspeed = y;
+    }
+
+    this.eat = function(pos){
+        var d = dist(this.x, this.y, pos.x, pos.y)
+        if (d < 1){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     this.update = function(){
