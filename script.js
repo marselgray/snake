@@ -1,9 +1,13 @@
 var s;
 
-//sets up canvas and drawing ability 
+//variable to keep track of grid size
+var scl = 20;
+
+//sets up canvas which is actual a grid and drawing ability 
 function setup(){
     createCanvas(600, 600)
     s = new Snake();
+    frameRate(10);
 }
 
 function draw(){
@@ -41,12 +45,16 @@ function Snake(){
     }
 
     this.update = function(){
-        this.x = this.x + this.xspeed;
-        this.y = this.y + this.yspeed;
+        this.x = this.x + this.xspeed * scl;
+        this.y = this.y + this.yspeed * scl;
+
+        this.x = constrain(this.x, 0, width - scl);
+        this.y = constrain(this.y, 0, height - scl);
+
     }
 
     this.show = function(){
         fill(255);
-        rect(this.x, this.y, 10, 10)
+        rect(this.x, this.y, scl, scl)
     }
 }
