@@ -11,7 +11,8 @@ var r, g, b;
 
 //sets up canvas which is actual a grid and drawing ability 
 function setup(){
-    createCanvas(600, 600)
+    // width, height 
+    createCanvas(700, 500)
     s = new Snake();
     frameRate(10);
     pickLocation(); 
@@ -31,12 +32,13 @@ function pickLocation(){
 
 // carries out the rendering elements to make everything visible
 function draw(){
-    background(51);
+    background(10);
     s.update();
     s.show();
     if (s.eat(food)){
         pickLocation();
     }
+    
     //var food features and changes color at keyPressed function
     fill(r, g, b)
     rect(food.x, food.y, scl, scl)
@@ -118,4 +120,3 @@ function Snake(){
         rect(this.x, this.y, scl, scl)
     }
 }
-
