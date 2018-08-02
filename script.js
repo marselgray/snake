@@ -1,3 +1,4 @@
+//snake
 var s;
 
 //variable to keep track of grid size
@@ -9,25 +10,30 @@ var food;
 // for red, green, and blue color values
 var r, g, b;
 
+//scoring feature 
+var scoreElem;
+
+
 //sets up canvas which is actual a grid and drawing ability 
 function setup(){
-    // width, height 
+
+    //score setup
+    scoreElem = createDiv('Score = 0');
+    scoreElem.position(20, 20);
+    scoreElem.id = 'score';
+    scoreElem.style('color', 'black');
+
+    // width, height of canvas
     createCanvas(900, 500)
     s = new Snake();
     frameRate(10);
     pickLocation(); 
 
+    //used for change colors of food
     r = random(255);
     g = random(255);
     b = random(255);
-}
 
-// puts the snake's food in a random location after it is eaten
-function pickLocation(){
-    var cols = floor(width/scl);
-    var rows = floor(height/scl);
-    food = createVector(floor(random(cols)), floor(random(rows)));
-    food.mult(scl)
 }
 
 // carries out the rendering elements to make everything visible
@@ -38,10 +44,23 @@ function draw(){
     if (s.eat(food)){
         pickLocation();
     }
-    
     //var food features and changes color at keyPressed function
     fill(r, g, b)
-    rect(food.x, food.y, scl, scl)
+    rect(food.x, food.y, scl, scl) 
+    //checkGameStatus();
+
+}
+
+// puts the snake's food in a random location after it is eaten
+function pickLocation(){
+    var cols = floor(width/scl);
+    var rows = floor(height/scl);
+    food = createVector(floor(random(cols)), floor(random(rows)));
+    food.mult(scl)
+    
+    //updates the score each time the food is eaten
+    prevScore = parseInt(scoreElem.html().substring(8));
+    scoreElem.html('Score = ' + (prevScore + 1));
 }
 
 
@@ -106,6 +125,8 @@ function Snake(){
 
         this.x = constrain(this.x, 0, width - scl);
         this.y = constrain(this.y, 0, height - scl);
+
+
     }
 
     this.show = function(){
@@ -120,3 +141,35 @@ function Snake(){
         rect(this.x, this.y, scl, scl)
     }
 }
+
+//
+
+
+
+
+  function checkGameStatus() {
+    if (this.x[this.x.length - 1] > width ||
+        this.x[this.x.length - 1] < 0 ||
+        this.y[this.y.length - 1] > height ||
+        this.y[this.y.length - 1] < 0 ||
+        checkSnakeCollision()) {
+        
+            var scoreVal = parseInt(scoreElem.html().substring(8));
+            scoreElem.html('Game ended! Your score was : ' + scoreVal);
+        }
+  }
+
+
+
+  /*
+ 
+*/
+function checkSnakeCollision() {
+    var snakeHeadX = this.x[this.x.length - 1];
+    var snakeHeadY = this.y[this.y.length - 1];
+    for (var i = 0; i < this.x.length - 1; i++) {
+      if (this.x[i] === snakeHeadX && this.y[i] === snakeHeadY) {
+        return true;
+      }
+    }
+  }
