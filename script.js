@@ -1,8 +1,8 @@
 //snake
 var s;
 
-//variable to keep track of grid size
-var scl = 20;
+//determines size of snake and food block
+var scl = 15;
 
 //object the snake attempts to eat
 var food;
@@ -19,7 +19,7 @@ function setup(){
 
     //score setup
     scoreElem = createDiv('Score = 0');
-    scoreElem.position(20, 20);
+    scoreElem.position(120, 120);
     scoreElem.id = 'score';
     scoreElem.style('color', 'black');
 
@@ -46,10 +46,9 @@ function draw(){
     }
     //var food features and changes color at keyPressed function
     fill(r, g, b)
-    rect(food.x, food.y, scl, scl) 
-    //checkGameStatus();
-
+    rect(food.x, food.y, scl, scl)  
 }
+
 
 // puts the snake's food in a random location after it is eaten
 function pickLocation(){
@@ -125,8 +124,6 @@ function Snake(){
 
         this.x = constrain(this.x, 0, width - scl);
         this.y = constrain(this.y, 0, height - scl);
-
-
     }
 
     this.show = function(){
@@ -140,36 +137,6 @@ function Snake(){
         }
         rect(this.x, this.y, scl, scl)
     }
+
 }
 
-//
-
-
-
-
-  function checkGameStatus() {
-    if (this.x[this.x.length - 1] > width ||
-        this.x[this.x.length - 1] < 0 ||
-        this.y[this.y.length - 1] > height ||
-        this.y[this.y.length - 1] < 0 ||
-        checkSnakeCollision()) {
-        
-            var scoreVal = parseInt(scoreElem.html().substring(8));
-            scoreElem.html('Game ended! Your score was : ' + scoreVal);
-        }
-  }
-
-
-
-  /*
- 
-*/
-function checkSnakeCollision() {
-    var snakeHeadX = this.x[this.x.length - 1];
-    var snakeHeadY = this.y[this.y.length - 1];
-    for (var i = 0; i < this.x.length - 1; i++) {
-      if (this.x[i] === snakeHeadX && this.y[i] === snakeHeadY) {
-        return true;
-      }
-    }
-  }
