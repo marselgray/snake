@@ -18,7 +18,7 @@ var scoreElem;
 function setup(){
 
     //score setup
-    scoreElem = createDiv('Score = 0');
+    scoreElem = createDiv('Score = -1');
     scoreElem.position(120, 120);
     scoreElem.id = 'score';
     scoreElem.style('color', 'black');
